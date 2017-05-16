@@ -1,0 +1,9 @@
+{
+  "generator-node": {
+    "promptValues": {
+      "authorName": "Arthur Oliveira",
+      "authorEmail": "arthur.gmraes@gmail.com",
+      "authorUrl": ""
+    }
+  }
+}
