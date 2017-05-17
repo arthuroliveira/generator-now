@@ -7,7 +7,7 @@ const slugify = require('slugify');
 module.exports = class extends Generator {
 
   prompting() {
-    const promptObj = require('./prompt')(this);
+    const promptObj = require('../prompt')(this);
 
     // Have Yeoman greet the user.
     this.log(yosay(

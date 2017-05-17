@@ -85,6 +85,14 @@ module.exports = function (app) {
     }
   ];
 
+  this.folders = [{
+    type: "checkbox",
+    name: "folders",
+    message: "What tables are you going to be working with?",
+    choices: Object.keys(tablesData),
+    paginated: true
+  }]
+
   this.selectFoders = function (selection) {
     var initialObj = {};
     var widget_index = selection.indexOf('sp_widgets');
