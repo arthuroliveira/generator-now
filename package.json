@@ -47,6 +47,9 @@
       "node": true
     }
   },
-  "repository": "/generator-now",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arthuroliveira/generator-now.git"
+  },
   "license": "MIT"
 }
