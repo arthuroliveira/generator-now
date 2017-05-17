@@ -1,8 +1,4 @@
-/**
- * Created by arthur.oliveira on 5/16/17.
- */
-
-
+'use strict';
 const widgets_obj = {
   "widget_client": {
     "table": "sp_widget",
@@ -33,9 +29,11 @@ const widgets_obj = {
 const tablesData = require('./data/tables');
 
 module.exports = function (app) {
+
+  var obj = {};
   let projectPrefix = "";
 
-  this.choices = [
+  obj.choices = [
     {
       type: "input",
       name: "instance",
@@ -85,7 +83,7 @@ module.exports = function (app) {
     }
   ];
 
-  this.folders = [{
+  obj.folders = [{
     type: "checkbox",
     name: "folders",
     message: "What tables are you going to be working with?",
@@ -93,7 +91,19 @@ module.exports = function (app) {
     paginated: true
   }];
 
-  this.selectFoders = function (selection) {
+  obj.authentication = [{
+    type: "input",
+    name: "username",
+    message: "Enter servicenow username. "
+  },
+    {
+      type: "password",
+      message: "Enter your servicenow password. ",
+      name: "password"
+    }
+  ];
+
+  obj.selectFoders = function (selection) {
     var initialObj = {};
     var widget_index = selection.indexOf('sp_widgets');
     if (widget_index != -1) {
@@ -109,7 +119,7 @@ module.exports = function (app) {
     return JSON.stringify(initialObj);
   };
 
-  this.selectLibs = function (libs) {
+  obj.selectLibs = function (libs) {
     libs = libs.trim();
 
     if (libs == "") {
@@ -120,11 +130,11 @@ module.exports = function (app) {
     return JSON.stringify(libs)
   };
 
-  this.generatePassword = function (username, password) {
+  obj.generatePassword = function (username, password) {
     return new Buffer(username + ':' + password).toString('base64');
   };
 
-  return this;
+  return obj;
 };
 
 
