@@ -3,7 +3,7 @@
  */
 
 
-var widgets_obj = {
+const widgets_obj = {
   "widget_client": {
     "table": "sp_widget",
     "key": "id",
@@ -30,30 +30,48 @@ var widgets_obj = {
   }
 };
 
-module.exports = function (app, folders) {
+const tablesData = require('./data/tables');
+
+module.exports = function (app) {
+  var projectPrefix = "";
+
   this.choices = [
     {
-      type: "checkbox",
-      name: "folders",
-      message: "What record types do you want to pull from?",
-      choices: folders,
-      paginated: true
+      type: "input",
+      name: "instance",
+      message: "Enter servicenow instance name (\<instance\>.service-now.com). "
     },
     {
       type: 'string',
       name: 'projectName',
       message: 'What\'s the project name?',
-      default: app.appname
+      default: app.appname,
+      validate: function (input) {
+        if (input) {
+          projectPrefix = input + "__";
+        }
+        return true;
+      }
     },
     {
-      type: "input",
-      name: "host",
-      message: "Enter servicenow instance name (\<instance\>.service-now.com). "
+      type: 'string',
+      name: 'libs',
+      message: 'Libraries used (separated by comma)'
     },
     {
       type: "input",
       name: "project_prefix",
-      message: "Enter your project prefix (e.g. ProjectName__). "
+      message: "Enter your project prefix.",
+      default: function () {
+        return projectPrefix;
+      }
+    },
+    {
+      type: "checkbox",
+      name: "folders",
+      message: "What tables are you going to be working with?",
+      choices: Object.keys(tablesData),
+      paginated: true
     },
     {
       type: "input",
@@ -65,17 +83,34 @@ module.exports = function (app, folders) {
       message: "Enter your servicenow password. ",
       name: "password"
     }
-
   ];
 
-  this.selection = function (selection) {
+  this.selectFoders = function (selection) {
     var initialObj = {};
-    if (selection.indexOf('sp_widgets') != -1)
+    var widget_index = selection.indexOf('sp_widgets');
+    if (widget_index != -1) {
+      selection.splice(widget_index, 1);
       initialObj = widgets_obj;
+    }
 
-    return {}
+
+    selection.forEach(function (item) {
+      initialObj[item] = tablesData[item];
+    });
+
+    return JSON.stringify(initialObj);
   };
 
+  this.selectLibs = function (libs) {
+    libs = libs.trim();
+
+    if (libs == "") {
+      libs = []
+    } else {
+      libs = libs.split(',');
+    }
+    return JSON.stringify(libs)
+  };
   return this;
 };
 
