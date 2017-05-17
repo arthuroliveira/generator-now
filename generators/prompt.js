@@ -33,7 +33,7 @@ const widgets_obj = {
 const tablesData = require('./data/tables');
 
 module.exports = function (app) {
-  var projectPrefix = "";
+  let projectPrefix = "";
 
   this.choices = [
     {
@@ -91,7 +91,7 @@ module.exports = function (app) {
     message: "What tables are you going to be working with?",
     choices: Object.keys(tablesData),
     paginated: true
-  }]
+  }];
 
   this.selectFoders = function (selection) {
     var initialObj = {};
@@ -119,6 +119,11 @@ module.exports = function (app) {
     }
     return JSON.stringify(libs)
   };
+
+  this.generatePassword = function (username, password) {
+    return new Buffer(username + ':' + password).toString('base64');
+  };
+
   return this;
 };
 

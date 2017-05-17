@@ -18,7 +18,7 @@ module.exports = class extends Generator {
       // To access props later use this.props.someAnswer;
       props.projectName = slugify(props.projectName);
       props.folders = promptObj.selectFoders(props.folders);
-      props.auth = new Buffer(props.username + ':' + props.password).toString('base64');
+      props.auth = promptObj.generatePassword(props.username, props.password);
       props.libs = promptObj.selectLibs(props.libs);
       this.props = props;
     });
