@@ -20,6 +20,7 @@ module.exports = class extends Generator {
       props.folders = promptObj.selectFoders(props.folders);
       props.auth = promptObj.generatePassword(props.username, props.password);
       props.libs = promptObj.selectLibs(props.libs);
+      props.dist = promptObj.selectDist(props);
       this.props = props;
     });
   }

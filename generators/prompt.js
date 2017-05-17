@@ -52,17 +52,34 @@ module.exports = function (app) {
       }
     },
     {
-      type: 'string',
-      name: 'libs',
-      message: 'Libraries used (separated by comma)'
-    },
-    {
       type: "input",
       name: "project_prefix",
       message: "Enter your project prefix.",
       default: function () {
         return projectPrefix;
       }
+    },
+    {
+      type: "list",
+      name: "app_dir",
+      message: "Where would you like to download files to?",
+      choices: ["dist", "RootDirectory", "other"]
+    },
+    {
+      type: "input",
+      name: "custom_app_dir",
+      message: "Enter folder name",
+      validate: function (input) {
+        return input != ""
+      },
+      when: function (answers) {
+        return answers.app_dir == "other"
+      }
+    },
+    {
+      type: 'string',
+      name: 'libs',
+      message: 'Libraries used (separated by comma)'
     },
     {
       type: "checkbox",
@@ -129,6 +146,17 @@ module.exports = function (app) {
     }
     return JSON.stringify(libs)
   };
+
+  obj.selectDist = function (answers) {
+    if (answers.app_dir == "dist")
+      return answers.app_dir;
+
+    if (answers.app_dir == "other")
+      return answers.custom_app_dir;
+
+    return "";
+  };
+
 
   obj.generatePassword = function (username, password) {
     return new Buffer(username + ':' + password).toString('base64');

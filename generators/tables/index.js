@@ -20,9 +20,6 @@ module.exports = class extends Generator {
     fs.readFile(configFile, 'UTF-8', function (err, content) {
       let config = JSON.parse(content);
       config.folders = JSON.parse(folders);
-
-      console.log(config);
-
       fs.writeFile(configFile, JSON.stringify(config, null, 4), null);
     });
   }
