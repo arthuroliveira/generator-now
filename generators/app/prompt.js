@@ -1,6 +1,35 @@
 /**
  * Created by arthur.oliveira on 5/16/17.
  */
+
+
+var widgets_obj = {
+  "widget_client": {
+    "table": "sp_widget",
+    "key": "id",
+    "field": "client_script",
+    "extension": "js"
+  },
+  "widget_css": {
+    "table": "sp_widget",
+    "key": "id",
+    "field": "css",
+    "extension": "scss"
+  },
+  "widget_html": {
+    "table": "sp_widget",
+    "key": "id",
+    "field": "template",
+    "extension": "html"
+  },
+  "widget_server": {
+    "table": "sp_widget",
+    "key": "id",
+    "field": "script",
+    "extension": "js"
+  }
+};
+
 module.exports = function (app, folders) {
   this.choices = [
     {
@@ -38,6 +67,15 @@ module.exports = function (app, folders) {
     }
 
   ];
+
+  this.selection = function (selection) {
+    var initialObj = {};
+    if (selection.indexOf('sp_widgets') != -1)
+      initialObj = widgets_obj;
+
+    return {}
+  };
+
   return this;
 };
 

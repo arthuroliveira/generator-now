@@ -35,12 +35,6 @@
     "field": "programmatic_content",
     "extension": "xml"
   },
-  "themes": {
-    "table": "sp_theme",
-    "key": "name",
-    "field": "css_variables",
-    "extension": "scss"
-  },
   "angular_templates": {
     "table": "sp_ng_template",
     "key": "id",
@@ -53,29 +47,11 @@
     "field": "script",
     "extension": "js"
   },
-  "widgets": {}
-  //    "widget_client": {
-  //        "table": "sp_widget",
-  //        "key": "id",
-  //        "field": "client_script",
-  //        "extension": "js"
-  //    },
-  //    "widget_css": {
-  //        "table": "sp_widget",
-  //        "key": "id",
-  //        "field": "css",
-  //        "extension": "scss"
-  //    },
-  //    "widget_html": {
-  //        "table": "sp_widget",
-  //        "key": "id",
-  //        "field": "template",
-  //        "extension": "html"
-  //    },
-  //    "widget_server": {
-  //        "table": "sp_widget",
-  //        "key": "id",
-  //        "field": "script",
-  //        "extension": "js"
-  //    }
+  "sp_themes": {
+    "table": "sp_theme",
+    "key": "name",
+    "field": "css_variables",
+    "extension": "scss"
+  },
+  "sp_widgets": {}
 }
