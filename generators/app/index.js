@@ -1,20 +1,21 @@
 'use strict';
 const Generator = require('yeoman-generator');
 const chalk = require('chalk');
-
 const yosay = require('yosay');
 const slugify = require('slugify');
-const initPrompt = require('./prompt');
+const tablesData = require('./data/tables');
 
 module.exports = class extends Generator {
+
   prompting() {
+    const initPrompt = require('./prompt')(this, Object.keys(tablesData));
+
     // Have Yeoman greet the user.
     this.log(yosay(
       'Welcome to the fabulous ' + chalk.red('generator-now') + ' generator!'
     ));
 
-
-    return this.prompt(initPrompt).then(props => {
+    return this.prompt(initPrompt.choices).then(props => {
       // To access props later use this.props.someAnswer;
       props.projectName = slugify(props.projectName);
       props.folders = {
@@ -52,10 +53,10 @@ module.exports = class extends Generator {
 
   }
 
-  _install() {
-    this.installDependencies({
-      bower: false,
-      npm: true
-    });
+  install() {
+    // this.installDependencies({
+    //   bower: false,
+    //   npm: true
+    // });
   }
 };

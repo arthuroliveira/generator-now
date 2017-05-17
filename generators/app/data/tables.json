@@ -1,0 +1,81 @@
+{
+  "script_includes": {
+    "table": "sys_script_include",
+    "key": "name",
+    "field": "script",
+    "extension": "js"
+  },
+  "ui_pages": {
+    "table": "sys_ui_page",
+    "key": "name",
+    "field": "html",
+    "extension": "html"
+  },
+  "ui_scripts": {
+    "table": "sys_ui_script",
+    "key": "name",
+    "field": "script",
+    "extension": "js"
+  },
+  "stylesheets": {
+    "table": "content_css",
+    "key": "name",
+    "field": "style",
+    "extension": "css"
+  },
+  "ui_macros": {
+    "table": "sys_ui_macro",
+    "key": "name",
+    "field": "xml",
+    "extension": "xml"
+  },
+  "content_block": {
+    "table": "content_block_programmatic",
+    "key": "name",
+    "field": "programmatic_content",
+    "extension": "xml"
+  },
+  "themes": {
+    "table": "sp_theme",
+    "key": "name",
+    "field": "css_variables",
+    "extension": "scss"
+  },
+  "angular_templates": {
+    "table": "sp_ng_template",
+    "key": "id",
+    "field": "template",
+    "extension": "html"
+  },
+  "angular_providers": {
+    "table": "sp_angular_provider",
+    "key": "name",
+    "field": "script",
+    "extension": "js"
+  },
+  "widgets": {}
+  //    "widget_client": {
+  //        "table": "sp_widget",
+  //        "key": "id",
+  //        "field": "client_script",
+  //        "extension": "js"
+  //    },
+  //    "widget_css": {
+  //        "table": "sp_widget",
+  //        "key": "id",
+  //        "field": "css",
+  //        "extension": "scss"
+  //    },
+  //    "widget_html": {
+  //        "table": "sp_widget",
+  //        "key": "id",
+  //        "field": "template",
+  //        "extension": "html"
+  //    },
+  //    "widget_server": {
+  //        "table": "sp_widget",
+  //        "key": "id",
+  //        "field": "script",
+  //        "extension": "js"
+  //    }
+}
