@@ -1,8 +1,8 @@
 {
   "name": "generator-now",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Generator for Service Now Grunt ",
-  "homepage": "",
+  "homepage": "http://arthuroliveira.github.io/now",
   "author": {
     "name": "Arthur Oliveira",
     "email": "arthur.gmraes@gmail.com",
@@ -47,9 +47,6 @@
       "node": true
     }
   },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/arthuroliveira/generator-now.git"
-  },
+  "repository": "arthuroliveira/generator-now",
   "license": "MIT"
 }
