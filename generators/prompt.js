@@ -46,7 +46,7 @@ module.exports = function (app) {
       default: app.appname,
       validate: function (input) {
         if (input) {
-          projectPrefix = input + "__";
+          projectPrefix = input + "-";
         }
         return true;
       }
