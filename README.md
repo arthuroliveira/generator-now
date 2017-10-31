@@ -25,7 +25,7 @@ yo now
 
 ## License
 
-MIT © [Arthur Oliveira]()
+MIT © [Arthur Oliveira](https://github.com/arthuroliveira/)
 
 
 [npm-image]: https://badge.fury.io/js/generator-now.svg
