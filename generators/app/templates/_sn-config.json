@@ -5,7 +5,9 @@
   "project_prefix": "<%= project_prefix %>",
   "app_name": "APP_NAME",
   "app_dir": "<%= dist %>",
+  "scope": "<%= scope %>",
   "libs": <%- libs %>,
+
   "map_extension": [
     {
       "from": ".do",

@@ -40,6 +40,17 @@ module.exports = function (app) {
       message: "Enter servicenow instance name (\<instance\>.service-now.com). "
     },
     {
+      type: "input",
+      name: "username",
+      message: "Enter servicenow username. "
+    },
+    {
+      type: "password",
+      message: "Enter your servicenow password. ",
+      name: "password"
+    },
+
+    {
       type: 'string',
       name: 'projectName',
       message: 'What\'s the project name?',
@@ -52,11 +63,37 @@ module.exports = function (app) {
       }
     },
     {
+      type: "list",
+      name: "app_type",
+      message: "Are you working with Global or Scope App?",
+      choices: ["scope", "global"]
+    },
+    {
       type: "input",
       name: "project_prefix",
       message: "Enter your project prefix.",
       default: function () {
         return projectPrefix;
+      },
+      when: function (answers) {
+        return answers.app_type == "global"
+      }
+
+    },
+    {
+      type: 'string',
+      name: 'libs',
+      message: 'Libraries used (separated by comma)',
+      when: function (answers) {
+        return answers.app_type == "global"
+      }
+    },
+    {
+      type: 'string',
+      name: 'scope',
+      message: 'What is the scope ID?',
+      when: function (answers) {
+        return answers.app_type == "scope"
       }
     },
     {
@@ -77,26 +114,11 @@ module.exports = function (app) {
       }
     },
     {
-      type: 'string',
-      name: 'libs',
-      message: 'Libraries used (separated by comma)'
-    },
-    {
       type: "checkbox",
       name: "folders",
       message: "What tables are you going to be working with?",
       choices: Object.keys(tablesData),
       paginated: true
-    },
-    {
-      type: "input",
-      name: "username",
-      message: "Enter servicenow username. "
-    },
-    {
-      type: "password",
-      message: "Enter your servicenow password. ",
-      name: "password"
     }
   ];
 
@@ -137,6 +159,7 @@ module.exports = function (app) {
   };
 
   obj.selectLibs = function (libs) {
+    libs = libs  || "";
     libs = libs.trim();
 
     if (libs == "") {
@@ -156,7 +179,6 @@ module.exports = function (app) {
 
     return "";
   };
-
 
   obj.generatePassword = function (username, password) {
     return new Buffer(username + ':' + password).toString('base64');
