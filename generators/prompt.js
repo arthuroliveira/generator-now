@@ -51,6 +51,37 @@ module.exports = function (app) {
     },
 
     {
+      type: "list",
+      name: "app_type",
+      message: "Are you working with Global or Scope App?",
+      choices: ["scope", "global"]
+    },
+
+    {
+      type: 'list',
+      name: 'scope',
+      message: 'What is the scope ID?',
+      choices: function () {
+        var result = [
+          {
+            name: 'Test',
+            value: 'test'
+          }, {
+            name: 'Test123',
+            value: 'test123'
+          },
+        ]
+
+        return new Promise(function (resolve, reject) {
+          setTimeout(resolve, 2000, result);
+        });
+      },
+      when: function (answers) {
+        return answers.app_type == "scope"
+      }
+    },
+
+    {
       type: 'string',
       name: 'projectName',
       message: 'What\'s the project name?',
@@ -62,12 +93,7 @@ module.exports = function (app) {
         return true;
       }
     },
-    {
-      type: "list",
-      name: "app_type",
-      message: "Are you working with Global or Scope App?",
-      choices: ["scope", "global"]
-    },
+
     {
       type: "input",
       name: "project_prefix",
@@ -86,14 +112,6 @@ module.exports = function (app) {
       message: 'Libraries used (separated by comma)',
       when: function (answers) {
         return answers.app_type == "global"
-      }
-    },
-    {
-      type: 'string',
-      name: 'scope',
-      message: 'What is the scope ID?',
-      when: function (answers) {
-        return answers.app_type == "scope"
       }
     },
     {
@@ -159,7 +177,7 @@ module.exports = function (app) {
   };
 
   obj.selectLibs = function (libs) {
-    libs = libs  || "";
+    libs = libs || "";
     libs = libs.trim();
 
     if (libs == "") {
