@@ -23,6 +23,18 @@ const widgets_obj = {
     "key": "id",
     "field": "script",
     "extension": "js"
+  },
+  "widget_link": {
+    "table": "sp_widget",
+    "key": "id",
+    "field": "link",
+    "extension": "js"
+  },
+  "widget_opts": {
+    "table": "sp_widget",
+    "key": "id",
+    "field": "option_schema",
+    "extension": "json"
   }
 };
 
