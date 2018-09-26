@@ -47,6 +47,18 @@
     "field": "script",
     "extension": "js"
   },
+  "sp_style_sheet":{
+    "table":"sp_css",
+    "key":"name",
+    "field":"css",
+    "extension":"css"
+  },
+  "sp_portals":{
+    "table":"sp_portal",
+    "key":"title",
+    "field":"css_variables",
+    "extension":"scss"
+  },
   "sp_themes": {
     "table": "sp_theme",
     "key": "name",
