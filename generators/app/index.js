@@ -19,14 +19,7 @@ module.exports = class extends Generator {
   }
 
   writing() {
-
-    // this.fs.copyTpl(
-    //   this.templatePath('**/*'),
-    //   this.destinationRoot(),
-    //   this.props
-    // );
     if (this.processFile) {
-
       this.fs.copyTpl(this.templatePath('_sn-config.json'), this.destinationPath('.sn-config.json'), this.props);
       this.fs.copyTpl(this.templatePath('_gitignore'), this.destinationPath('.gitignore'), this.props);
       this.fs.copyTpl(this.templatePath('Gruntfile.js'), this.destinationPath('Gruntfile.js'), this.props);

@@ -60,7 +60,7 @@ module.exports = function (app) {
     {
       type: 'list',
       name: 'scope',
-      message: 'What is the scope ID?',
+      message: 'What Scope are you working with?',
       choices: function () {
         var result = [
           {
