@@ -37,8 +37,32 @@ module.exports = function (app) {
     {
       type: "input",
       name: "instance",
-      message: "Enter servicenow instance name (\<instance\>.service-now.com). "
+      message: "Enter servicenow instance url"
     },
+    {
+      type: 'list',
+      name: 'protocol',
+      message: 'What protocol do you want to use?',
+      choices: function () {
+        var result = [
+          {
+            name: 'http',
+            value: 'http'
+          }, {
+            name: 'https',
+            value: 'https'
+          },
+        ];
+
+        return new Promise(function (resolve, reject) {
+          setTimeout(resolve, 2000, result);
+        });
+      },
+      when: function (answers) {
+        return true;
+      }
+    },
+
     {
       type: "input",
       name: "username",
