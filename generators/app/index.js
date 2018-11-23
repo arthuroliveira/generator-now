@@ -53,6 +53,8 @@ module.exports = class extends Generator {
       props.dist = promptObj.selectDist(props);
       props.project_prefix = props.project_prefix || "";
       props.scope = promptObj.selectScopes(props.scope);
+      props.protocol = props.protocol || "https";
+
       this.props = props;
       this.processFile = true;
     });

@@ -1,6 +1,6 @@
 {
   "host": "<%= instance %>",
-  "protocol": "https",
+  "protocol": "<%= protocol %>",
   "auth": "<%= auth %>",
   "project_prefix": "<%= project_prefix %>",
   "app_name": "APP_NAME",
