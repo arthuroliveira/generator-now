@@ -52,7 +52,7 @@ module.exports = class extends Generator {
       props.libs = promptObj.selectLibs(props.libs);
       props.dist = promptObj.selectDist(props);
       props.project_prefix = props.project_prefix || "";
-      props.scope = promptObj.selectScopes(props.scope);
+      props.scope = promptObj.selectScopes(props.scope) || "null";
       props.protocol = props.protocol || "https";
 
       this.props = props;
