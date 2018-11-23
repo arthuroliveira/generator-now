@@ -10,7 +10,7 @@
   "devDependencies": {
     "grunt": "^1.0.1",
     "grunt-contrib-watch": "^1.0.0",
-    "grunt-servicenow": "^0.5.1"
+    "grunt-servicenow": "^0.6.0"
   },
   "description": ""
 }
