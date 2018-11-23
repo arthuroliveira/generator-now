@@ -27,6 +27,7 @@ const widgets_obj = {
 };
 
 const tablesData = require('./data/tables');
+const ServiceNow = require('./app/services/servicenow');
 
 module.exports = function (app) {
 
@@ -46,12 +47,13 @@ module.exports = function (app) {
       choices: function () {
         var result = [
           {
-            name: 'http',
-            value: 'http'
-          }, {
             name: 'https',
             value: 'https'
           },
+          {
+            name: 'http',
+            value: 'http'
+          }
         ];
 
         return new Promise(function (resolve, reject) {
@@ -82,39 +84,14 @@ module.exports = function (app) {
     },
 
     {
-      type: 'list',
+      type: 'checkbox',
       name: 'scope',
       message: 'What Scope are you working with?',
-      choices: function () {
-        var result = [
-          {
-            name: 'Test',
-            value: 'test'
-          }, {
-            name: 'Test123',
-            value: 'test123'
-          },
-        ]
-
-        return new Promise(function (resolve, reject) {
-          setTimeout(resolve, 2000, result);
-        });
+      choices: function (answers) {
+        return fetchScopes(answers)
       },
       when: function (answers) {
         return answers.app_type == "scope"
-      }
-    },
-
-    {
-      type: 'string',
-      name: 'projectName',
-      message: 'What\'s the project name?',
-      default: app.appname,
-      validate: function (input) {
-        if (input) {
-          projectPrefix = input + "-";
-        }
-        return true;
       }
     },
 
@@ -123,7 +100,7 @@ module.exports = function (app) {
       name: "project_prefix",
       message: "Enter your project prefix.",
       default: function () {
-        return projectPrefix;
+        return app.appname + '-';
       },
       when: function (answers) {
         return answers.app_type == "global"
@@ -184,6 +161,10 @@ module.exports = function (app) {
     }
   ];
 
+  obj.selectScopes = function (scopes) {
+    return JSON.stringify(scopes)
+  };
+
   obj.selectFoders = function (selection) {
     var initialObj = {};
     var widget_index = selection.indexOf('sp_widgets');
@@ -201,10 +182,7 @@ module.exports = function (app) {
   };
 
   obj.selectLibs = function (libs) {
-    libs = libs || "";
-    libs = libs.trim();
-
-    if (libs == "") {
+    if (!libs || libs == "") {
       libs = []
     } else {
       libs = libs.split(',');
@@ -225,6 +203,23 @@ module.exports = function (app) {
   obj.generatePassword = function (username, password) {
     return new Buffer(username + ':' + password).toString('base64');
   };
+
+
+  function fetchScopes(answers) {
+    return new Promise(function (resolve, reject) {
+      var callback = function (response) {
+        var results = [];
+        response.result.forEach(function (item) {
+          results.push({
+            name: item.name,
+            value: item.sys_id
+          })
+        });
+        resolve(results);
+      };
+      new ServiceNow(answers).fetchScopes(callback);
+    });
+  }
 
   return obj;
 };

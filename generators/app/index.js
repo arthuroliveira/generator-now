@@ -45,14 +45,14 @@ module.exports = class extends Generator {
     const promptObj = this.promptObj;
     return this.prompt(promptObj.choices).then(props => {
       // To access props later use this.props.someAnswer;
-      props.projectName = slugify(props.projectName);
+      props.projectName = slugify(props.projectName || this.appname);
       props.folders = promptObj.selectFoders(props.folders);
       props.folders_key = Object.keys(JSON.parse(props.folders));
       props.auth = promptObj.generatePassword(props.username, props.password);
       props.libs = promptObj.selectLibs(props.libs);
       props.dist = promptObj.selectDist(props);
       props.project_prefix = props.project_prefix || "";
-      props.scope = props.scope || "";
+      props.scope = promptObj.selectScopes(props.scope);
       this.props = props;
       this.processFile = true;
     });
