@@ -27,6 +27,7 @@ const widgets_obj = {
 };
 
 const tablesData = require('./data/tables');
+const ServiceNow = require('./app/services/servicenow');
 
 module.exports = function (app) {
 
@@ -37,26 +38,81 @@ module.exports = function (app) {
     {
       type: "input",
       name: "instance",
-      message: "Enter servicenow instance name (\<instance\>.service-now.com). "
+      message: "Enter servicenow instance url"
     },
     {
-      type: 'string',
-      name: 'projectName',
-      message: 'What\'s the project name?',
-      default: app.appname,
-      validate: function (input) {
-        if (input) {
-          projectPrefix = input + "-";
-        }
+      type: 'list',
+      name: 'protocol',
+      message: 'What protocol do you want to use?',
+      choices: function () {
+        var result = [
+          {
+            name: 'https',
+            value: 'https'
+          },
+          {
+            name: 'http',
+            value: 'http'
+          }
+        ];
+
+        return new Promise(function (resolve, reject) {
+          setTimeout(resolve, 2000, result);
+        });
+      },
+      when: function (answers) {
         return true;
       }
     },
+
+    {
+      type: "input",
+      name: "username",
+      message: "Enter servicenow username. "
+    },
+    {
+      type: "password",
+      message: "Enter your servicenow password. ",
+      name: "password"
+    },
+
+    {
+      type: "list",
+      name: "app_type",
+      message: "Are you working with Global or Scope App?",
+      choices: ["scope", "global"]
+    },
+
+    {
+      type: 'checkbox',
+      name: 'scope',
+      message: 'What Scope are you working with?',
+      choices: function (answers) {
+        return fetchScopes(answers)
+      },
+      when: function (answers) {
+        return answers.app_type == "scope"
+      }
+    },
+
     {
       type: "input",
       name: "project_prefix",
       message: "Enter your project prefix.",
       default: function () {
-        return projectPrefix;
+        return app.appname + '-';
+      },
+      when: function (answers) {
+        return answers.app_type == "global"
+      }
+
+    },
+    {
+      type: 'string',
+      name: 'libs',
+      message: 'Libraries used (separated by comma)',
+      when: function (answers) {
+        return answers.app_type == "global"
       }
     },
     {
@@ -77,26 +133,11 @@ module.exports = function (app) {
       }
     },
     {
-      type: 'string',
-      name: 'libs',
-      message: 'Libraries used (separated by comma)'
-    },
-    {
       type: "checkbox",
       name: "folders",
       message: "What tables are you going to be working with?",
       choices: Object.keys(tablesData),
       paginated: true
-    },
-    {
-      type: "input",
-      name: "username",
-      message: "Enter servicenow username. "
-    },
-    {
-      type: "password",
-      message: "Enter your servicenow password. ",
-      name: "password"
     }
   ];
 
@@ -120,6 +161,10 @@ module.exports = function (app) {
     }
   ];
 
+  obj.selectScopes = function (scopes) {
+    return JSON.stringify(scopes)
+  };
+
   obj.selectFoders = function (selection) {
     var initialObj = {};
     var widget_index = selection.indexOf('sp_widgets');
@@ -137,9 +182,7 @@ module.exports = function (app) {
   };
 
   obj.selectLibs = function (libs) {
-    libs = libs.trim();
-
-    if (libs == "") {
+    if (!libs || libs == "") {
       libs = []
     } else {
       libs = libs.split(',');
@@ -157,10 +200,26 @@ module.exports = function (app) {
     return "";
   };
 
-
   obj.generatePassword = function (username, password) {
     return new Buffer(username + ':' + password).toString('base64');
   };
+
+
+  function fetchScopes(answers) {
+    return new Promise(function (resolve, reject) {
+      var callback = function (response) {
+        var results = [];
+        response.result.forEach(function (item) {
+          results.push({
+            name: item.name,
+            value: item.sys_id
+          })
+        });
+        resolve(results);
+      };
+      new ServiceNow(answers).fetchScopes(callback);
+    });
+  }
 
   return obj;
 };

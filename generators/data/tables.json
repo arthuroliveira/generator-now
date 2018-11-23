@@ -5,6 +5,18 @@
     "field": "script",
     "extension": "js"
   },
+  "scripted_rest": {
+    "table": "sys_ws_operation",
+    "key": "name",
+    "field": "operation_script",
+    "extension": "js"
+  },
+  "business_rules": {
+    "table": "sys_script",
+    "key": "name",
+    "field": "script",
+    "extension": "js"
+  },
   "ui_pages": {
     "table": "sys_ui_page",
     "key": "name",
